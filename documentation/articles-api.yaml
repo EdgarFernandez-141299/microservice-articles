@@ -1,0 +1,215 @@
+openapi: 3.0.3
+info:
+  title: Articles API
+  description: |-
+    API para la Gestión de Artículos.
+    
+    Esta API permite gestionar artículos y ofrece los siguientes recursos:
+    
+    - Consultar información sobre los detalles de un artículo disponible en el catálogo.
+    - Actualizar ciertos datos de un artículo específico.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /articles-management/search:
+    get:
+      tags:
+        - Articles Management
+      summary: Search for articles by ID
+      parameters:
+        - name: articleId
+          in: query
+          required: true
+          description: The ID of the article to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: "Operación exitosa"
+                  folio:
+                    type: string
+                    example: "20241005d691afb021d5457393a5-20241005d691afb021d5457393a5"
+                  respuesta:
+                    type: object
+                    properties:
+                      articleId:
+                        type: string
+                        example: "COCA-12378"
+                      name:
+                        type: string
+                        example: "Coca Cola"
+                      description:
+                        type: string
+                        example: "descripción final"
+                      price:
+                        type: number
+                        format: double
+                        example: 40.56
+                      model:
+                        type: string
+                        example: "model-123"
+        '400':
+          description: Bad Request - Incorrect input parameters
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/BadRequestArticleIdRequired'
+                
+        '404':
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codigo:
+                    type: string
+                    example: "404.edgar-net-not-found.404"
+                  folio:
+                    type: string
+                    example: "20241005bf62cccd788f4ffa8764-20241005bf62cccd788f4ffa8764"
+                  mensaje:
+                    type: string
+                    example: "Recurso no encontrado"
+                  detalles:
+                    type: array
+                    items:
+                      type: string
+                      example: "El articulo con id: COCA-123788 no fue encontrado"
+
+  /articles-management/update/{articleId}:
+    patch:
+      tags:
+        - Articles Management
+      summary: Update article details
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          description: The ID of the article to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: 
+                - description
+                - model
+              properties:
+                description:
+                  type: string
+                  maxLength: 200
+                  example: "Descripción final"
+                model:
+                  type: string
+                  maxLength: 10
+                  example: "model-123"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: "Operación exitosa"
+                  folio:
+                    type: string
+                    example: "2024100561e13a574435421384cd-2024100561e13a574435421384cd"
+                  respuesta:
+                    type: object
+                    properties:
+                      articleId:
+                        type: string
+                        example: "COCA-12378"
+                      name:
+                        type: string
+                        example: "Coca Cola"
+                      description:
+                        type: string
+                        example: "descripción final"
+                      price:
+                        type: number
+                        format: double
+                        example: 40.56
+                      model:
+                        type: string
+                        example: "model-123"
+        '400':
+          description: Bad Request - Incorrect input parameters
+          content:
+            application/json:
+              schema:
+               oneOf:
+                - $ref: '#/components/schemas/BadRequestBodyDataRequired'
+                - $ref: '#/components/schemas/BadRequestNotUpdate'
+components:
+  schemas:
+    BadRequestArticleIdRequired:
+      type: object
+      properties:
+        codigo:
+          type: string
+          example: "400.edgar-net-bad-request.400"
+        folio:
+          type: string
+          example: "202410053fb8b914fd1041a98ed8-202410053fb8b914fd1041a98ed8"
+        mensaje:
+          type: string
+          example: "Parametros de entrada incorrectos"
+        detalles:
+          type: array
+          items:
+            type: string
+            example: "articleId es requerido"
+    BadRequestBodyDataRequired:
+      type: object
+      properties:
+        codigo:
+          type: string
+          example: "400.edgar-net-bad-request.400"
+        folio:
+          type: string
+          example: "202410053fb8b914fd1041a98ed8-202410053fb8b914fd1041a98ed8"
+        mensaje:
+          type: string
+          example: "Parametros de entrada incorrectos"
+        detalles:
+          type: array
+          items:
+            type: string
+            example:
+              - "description es requerido"
+              - "model es requerido"
+    BadRequestNotUpdate:
+      type: object
+      properties:
+        codigo:
+          type: string
+          example: "400.edgar-net-bad-request.400"
+        folio:
+          type: string
+          example: "202410053fb8b914fd1041a98ed8-202410053fb8b914fd1041a98ed8"
+        mensaje:
+          type: string
+          example: "Parametros de entrada incorrectos"
+        detalles:
+          type: array
+          items:
+            type: string
+            example: "No fue posible actualizar el articulo con id: COCA-1237893"
+                 

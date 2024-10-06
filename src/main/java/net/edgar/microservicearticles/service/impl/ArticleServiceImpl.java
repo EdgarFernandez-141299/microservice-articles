@@ -42,7 +42,7 @@ public class ArticleServiceImpl implements ArticleService {
         log.info("Inicia servicio de actualización de articulo...");
 
         if (this.articleRepository.updateArticle(articleRequestDTO.getDescription(), articleRequestDTO.getModel(), articleId) == 0) {
-            throw new UpdateDatabaseException(String.format("No se encontro el articulo con id: %s", articleId));
+            throw new UpdateDatabaseException(String.format("No fue posible actualizar el articulo con id: %s", articleId));
         }
 
         ArticleEntity articleEntity = this.articleRepository.findById(articleId)
