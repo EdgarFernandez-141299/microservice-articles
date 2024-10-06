@@ -12,12 +12,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/articles-management/search?articleId=COCA-12379",
-					"protocol": "http",
+					"raw": "https://microservice-articles-371823066810.us-central1.run.app/articles-management/search?articleId=COCA-12379",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"microservice-articles-371823066810",
+						"us-central1",
+						"run",
+						"app"
 					],
-					"port": "8080",
 					"path": [
 						"articles-management",
 						"search"
@@ -39,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"description\": \"descripción final\",\n    \"model\": \"model-123\"\n}",
+					"raw": "{\n    \"description\": \"descripción final 45\",\n    \"model\": \"model-158\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -47,12 +49,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/articles-management/update/COCA-12379",
-					"protocol": "http",
+					"raw": "https://microservice-articles-371823066810.us-central1.run.app/articles-management/update/COCA-12379",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"microservice-articles-371823066810",
+						"us-central1",
+						"run",
+						"app"
 					],
-					"port": "8080",
 					"path": [
 						"articles-management",
 						"update",
