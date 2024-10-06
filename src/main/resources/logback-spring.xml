@@ -79,7 +79,7 @@
 
     <springProfile name="cloud">
         <logger name="org.springframework" level="INFO" additivity="false">
-            <appender-ref ref="CONSOLE_DEV"/>
+            <appender-ref ref="CONSOLE_CLOUD"/>
         </logger>
         <root level="INFO">
             <appender-ref ref="CONSOLE_CLOUD"/>
