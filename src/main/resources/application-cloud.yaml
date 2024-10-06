@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gcp:
+      sql:
+        enabled: true
+        database-name: articles_db
+        instance-connection-name: articles-project-437719:us-central1:mysql-v8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
+    username: articles
+    password: Articles_1234;
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
