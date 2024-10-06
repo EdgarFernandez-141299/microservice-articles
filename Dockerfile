@@ -1,19 +1,56 @@
 
+# Etapa 1: Construcción del JAR
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 
-FROM eclipse-temurin:21-jdk-jammy
-
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-COPY .mvn/ .mvn
+# Copiar el archivo pom.xml y el código fuente
+COPY pom.xml .
+COPY src ./src
 
-COPY mvnw pom.xml ./
+# Ejecutar Maven para compilar el JAR
+RUN mvn clean package -DskipTests
 
-RUN apt-get update && apt-get install -y dos2unix
+# Etapa 2: Optimización de la imagen
+FROM eclipse-temurin:21.0.3_9-jdk-alpine AS openjdk-21
 
-RUN dos2unix ./mvnw
+# Instalar binutils
+RUN apk add --no-cache binutils
 
-RUN ./mvnw dependency:resolve
+# Crear una JRE optimizada
+RUN $JAVA_HOME/bin/jlink \
+         --verbose \
+         --add-modules ALL-MODULE-PATH \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /jreoptimized
 
-copy src ./src
+# Etapa 3: Imagen final
+FROM alpine:latest
 
-CMD ["*./mvnw", "spring-boot:run"]
+# Configurar JAVA_HOME y PATH
+ENV JAVA_HOME=/jre
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+# Copiar la JRE optimizada
+COPY --from=openjdk-21 /jreoptimized $JAVA_HOME
+
+# Configurar la zona horaria
+ENV TZ=America/Mexico_City
+
+# Copiar el JAR generado desde la etapa de construcción
+COPY --from=build /app/target/microservice-articles-0.0.1-SNAPSHOT.jar /app/
+
+# Establecer el directorio de trabajo
+WORKDIR /app
+
+ENV PORT 8080
+
+# Exponer el puerto
+EXPOSE 8080
+
+# Definir el comando de inicio
+ENTRYPOINT ["/jre/bin/java","-jar","microservice-articles-0.0.1-SNAPSHOT.jar"]
