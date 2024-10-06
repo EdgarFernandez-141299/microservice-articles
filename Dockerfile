@@ -48,7 +48,7 @@ COPY --from=build /app/target/microservice-articles-0.0.1-SNAPSHOT.jar /app/
 WORKDIR /app
 
 # Exponer el puerto
-#EXPOSE 8080
+EXPOSE 8080
 
 # Definir el comando de inicio
 ENTRYPOINT ["/jre/bin/java","-jar","microservice-articles-0.0.1-SNAPSHOT.jar"]
