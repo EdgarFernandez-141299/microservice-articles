@@ -47,8 +47,6 @@ COPY --from=build /app/target/microservice-articles-0.0.1-SNAPSHOT.jar /app/
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-ENV PORT 8080
-
 # Exponer el puerto
 EXPOSE 8080
 

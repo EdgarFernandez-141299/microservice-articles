@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "44dcb52d-eead-464d-bbdb-7d980b2f83ef",
+		"name": "microservice-articles",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12863902"
+	},
+	"item": [
+		{
+			"name": "GET /search?articleId={articleId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/articles-management/search?articleId=COCA-12379",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"articles-management",
+						"search"
+					],
+					"query": [
+						{
+							"key": "articleId",
+							"value": "COCA-12379"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /update/{articleId}",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"descripción final\",\n    \"model\": \"model-123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/articles-management/update/COCA-12379",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"articles-management",
+						"update",
+						"COCA-12379"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
