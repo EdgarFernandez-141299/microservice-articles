@@ -47,6 +47,11 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
+			<version>1.2.8.RELEASE</version>
+		</dependency>
 		<!-- Logstash encoder for Logback (Libreria que ya trae todo lo necesario para utilizar Logback y Logstash) -->
 		<dependency>
 			<groupId>net.logstash.logback</groupId>
